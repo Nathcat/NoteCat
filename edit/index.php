@@ -108,12 +108,12 @@
                 } else {
                     file = new File(content.join("\n"), file.name);
                     let path = "/NoteCat";
-                    
+
                     let fd = new FormData();
                     fd.append("file", file);
-                    fd.append("displayPath", path);
+                    fd.append("filePath", searchParams.get("file"));
 
-                    fetch("https://cdn.nathcat.net/cloud/upload.php", {
+                    fetch("https://cdn.nathcat.net/cloud/replace-content.php", {
                         method: "POST",
                         credentials: "include",
                         body: fd
