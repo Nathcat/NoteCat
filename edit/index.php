@@ -41,7 +41,7 @@
             }).then((r) => r.json()).then((r) => {
                 if (r.status === "success") {
                     file = r.file;
-                    file.filePath = searchParams.get("file")
+                    file.filePath = searchParams.get("file");
 
                     fetch("https://cdn.nathcat.net/cloud/" + searchParams.get("file"), { mode: 'no-cors' })
                         .then((r) => r.text()).then((r) => {
