@@ -44,6 +44,54 @@
             });
         };
 
+        var saveNote = () => {
+            if (file === undefined) {
+                let blob = new Blob([content.join("\n")], {
+                    type: "text/plain"
+                });
+
+                file = new File([blob], prompt("Please enter a name for your new note") + ".md", {
+                    type: "text/plain"
+                });
+                let path = "/NoteCat";
+
+                let fd = new FormData();
+                fd.append("file", file);
+                fd.append("displayPath", path);
+
+                fetch("https://cdn.nathcat.net/cloud/upload.php", {
+                    method: "POST",
+                    credentials: "include",
+                    body: fd
+                }).then((r) => r.json()).then((r) => {
+                    if (r.status === "fail") alert(r.message);
+                    else location = "?file=" + r.name;
+                });
+            } else {
+                let blob = new Blob([content.join("\n")], {
+                    type: "text/plain"
+                });
+
+                file = new File([blob], file.name, {
+                    type: "text/plain"
+                });
+                let path = "/NoteCat";
+
+                let fd = new FormData();
+                fd.append("file", file);
+                fd.append("filePath", searchParams.get("file"));
+
+                fetch("https://cdn.nathcat.net/cloud/replace-content.php", {
+                    method: "POST",
+                    credentials: "include",
+                    body: fd
+                }).then((r) => r.json()).then((r) => {
+                    if (r.status === "fail") alert(r.message);
+                    else location.reload();
+                });
+            }
+        };
+
         if (searchParams.has("file")) {
             fetch("https://cloud.nathcat.net/get-file.php", {
                 method: "POST",
@@ -60,8 +108,7 @@
                         .then((r) => r.text()).then((r) => {
                             content = r.split("\n");
                             renderContent();
-                        }
-                    );
+                        });
 
                 } else {
                     alert(r.message);
@@ -97,45 +144,11 @@
             } else if (e.ctrlKey && e.key === "s") {
                 e.preventDefault();
 
-                if (file === undefined) {
-                    let blob = new Blob([content.join("\n")], { type: "text/plain" });
-
-                    file = new File([blob], prompt("Please enter a name for your new note") + ".md", {type: "text/plain"});
-                    let path = "/NoteCat";
-
-                    let fd = new FormData();
-                    fd.append("file", file);
-                    fd.append("displayPath", path);
-
-                    fetch("https://cdn.nathcat.net/cloud/upload.php", {
-                        method: "POST",
-                        credentials: "include",
-                        body: fd
-                    }).then((r) => r.json()).then((r) => {
-                        if (r.status === "fail") alert(r.message);
-                        else location = "?file=" + r.name;
-                    });
-                } else {
-                    let blob = new Blob([content.join("\n")], { type: "text/plain" });
-
-                    file = new File([blob], file.name, {type: "text/plain"});
-                    let path = "/NoteCat";
-
-                    let fd = new FormData();
-                    fd.append("file", file);
-                    fd.append("filePath", searchParams.get("file"));
-
-                    fetch("https://cdn.nathcat.net/cloud/replace-content.php", {
-                        method: "POST",
-                        credentials: "include",
-                        body: fd
-                    }).then((r) => r.json()).then((r) => {
-                        if (r.status === "fail") alert(r.message);
-                        else location.reload();
-                    });
-                }
+                saveNote();
             }
         });
+
+        window.onbeforeunload = saveNote;
     </script>
 </body>
 
