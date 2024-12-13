@@ -19,6 +19,7 @@
         <?php include("../header.php"); ?>
 
         <div style="margin-left: 10px" class="main">
+            <a href="/">Return home</a>
             <div id="note-content" class="column"></div>
             <textarea id="note-editor"></textarea>
         </div>
