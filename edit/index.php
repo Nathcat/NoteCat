@@ -115,7 +115,6 @@
                         .then((r) => r.text()).then((r) => {
                             content = r.split("\n");
                             renderContent();
-                            autoSaveHandler();
                         });
 
                 } else {
@@ -141,6 +140,7 @@
                     content.push($(this).val());
                     renderContent();
                     $(this).val("");
+                    saveNote();
                 }
             } else if (e.key === "Backspace") {
                 let lines = $(this).val().split("\n");
@@ -148,6 +148,7 @@
                     $(this).val(content[content.length - 1]);
                     content.splice(content.length - 1, 1);
                     renderContent();
+                    saveNote();
                 }
             } else if (e.ctrlKey && e.key === "s") {
                 e.preventDefault();
