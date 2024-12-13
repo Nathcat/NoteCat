@@ -89,7 +89,7 @@
                     body: fd
                 }).then((r) => r.json()).then((r) => {
                     if (r.status === "fail") alert(r.message);
-                    else $("#last-saved-message").html("<i>Last saved " + new Date().getTime() + "</i>");
+                    else $("#last-saved-message").html("<i>Last saved " + new Date().toString() + "</i>");
                 });
             }
         };
