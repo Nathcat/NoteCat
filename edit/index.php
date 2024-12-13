@@ -30,6 +30,18 @@
         const searchParams = new URLSearchParams(window.location.search);
         var file;
         var content = [];
+        var converter = new showdown.Converter();
+        var renderContent = () => {
+            let container = document.getElementById("note-content");
+            container.innerHTML = "";
+            content.forEach((v) => {
+                container.innerHTML += converter.makeHtml(v);
+            });
+
+            $("#note-content a").each(function() {
+                $(this).attr("target", "_blank");
+            });
+        };
 
         if (searchParams.has("file")) {
             fetch("https://cloud.nathcat.net/get-file.php", {
@@ -46,6 +58,7 @@
                     fetch("https://cdn.nathcat.net/cloud/read-notecat.php?file=" + searchParams.get("file"))
                         .then((r) => r.text()).then((r) => {
                             content = r.split("\n");
+                            renderContent();
                         }
                     );
 
@@ -59,21 +72,6 @@
 
             file = undefined;
         }
-
-        var converter = new showdown.Converter();
-        var renderContent = () => {
-            let container = document.getElementById("note-content");
-            container.innerHTML = "";
-            content.forEach((v) => {
-                container.innerHTML += converter.makeHtml(v);
-            });
-
-            $("#note-content a").each(function() {
-                $(this).attr("target", "_blank");
-            });
-        };
-
-        renderContent();
 
         $("#note-editor").on("input", function(e) {
             this.style.height = 'auto';
