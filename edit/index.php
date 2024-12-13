@@ -43,7 +43,7 @@
                     file = r.file;
                     file.filePath = searchParams.get("file");
 
-                    fetch("https://cdn.nathcat.net/cloud/read-notecat?file=" + searchParams.get("file"), { method: "GET", mode: 'no-cors' })
+                    fetch("https://cdn.nathcat.net/cloud/read-notecat.php?file=" + searchParams.get("file"), { method: "GET", mode: 'no-cors' })
                         .then((r) => r.text()).then((r) => {
                             content = r.split("\n");
                         }
