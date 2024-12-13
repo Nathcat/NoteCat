@@ -110,6 +110,7 @@
                 if (r.status === "success") {
                     file = r.file;
                     file.filePath = searchParams.get("file");
+                    document.title = file.name;
 
                     fetch("https://cdn.nathcat.net/cloud/read-notecat.php?file=" + searchParams.get("file"))
                         .then((r) => r.text()).then((r) => {
