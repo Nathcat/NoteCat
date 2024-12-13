@@ -20,6 +20,8 @@
 
         <div style="margin-left: 10px" class="main">
             <a href="/">Return home</a>
+            <p id="last-saved-message"><i>Not saved since opened.</i></p>
+            <div class="horizontal-divider"></div>
             <div id="note-content" class="column"></div>
             <textarea id="note-editor"></textarea>
         </div>
@@ -87,10 +89,15 @@
                     body: fd
                 }).then((r) => r.json()).then((r) => {
                     if (r.status === "fail") alert(r.message);
-                    else location.reload();
+                    else $("#last-saved-message").html("<i>Last saved " + new Date().getTime() + "</i>");
                 });
             }
         };
+
+        var autoSaveHandler = () => {
+            saveNote();
+            setTimeout(autoSaveHandler, 10000);
+        }
 
         if (searchParams.has("file")) {
             fetch("https://cloud.nathcat.net/get-file.php", {
@@ -108,6 +115,7 @@
                         .then((r) => r.text()).then((r) => {
                             content = r.split("\n");
                             renderContent();
+                            autoSaveHandler();
                         });
 
                 } else {
@@ -147,8 +155,6 @@
                 saveNote();
             }
         });
-
-        window.onbeforeunload = saveNote;
     </script>
 </body>
 
