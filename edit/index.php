@@ -34,6 +34,8 @@
         var file;
         var content = [];
         var converter = new showdown.Converter();
+        converter.getOptions().tables = true;
+        converter.getOptions().tasklists = true;
         var renderContent = () => {
             let container = document.getElementById("note-content");
             container.innerHTML = "";
