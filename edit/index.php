@@ -70,7 +70,7 @@
                     else location = "?file=" + r.name;
                 });
             } else {
-                let blob = new Blob([content.join("\n")], {
+                let blob = new Blob([content.join("\n\n")], {
                     type: "text/plain"
                 });
 
