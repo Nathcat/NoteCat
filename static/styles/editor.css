@@ -1,0 +1,15 @@
+#note-editor {
+    width: 95%;
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
+    font-size: 2vw;
+    background-color: var(--primary-color);
+    resize: none;
+    overflow: hidden;
+    border: none;
+}
+
+#note-editor:focus {
+    outline: none;
+}
