@@ -43,7 +43,7 @@
                     file = r.file;
                     file.filePath = searchParams.get("file")
 
-                    fetch("https://cdn.nathcat.net/cloud/" + searchParams.get("file"))
+                    fetch("https://cdn.nathcat.net/cloud/" + searchParams.get("file"), { mode: 'no-cors' })
                         .then((r) => r.text()).then((r) => {
                             content = r.split("\n");
                         }
