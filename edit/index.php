@@ -90,7 +90,9 @@
                 e.preventDefault();
 
                 if (file === undefined) {
-                    file = new File(content.join("\n"), prompt("Enter name for new file") + ".md");
+                    let blob = new Blob([content.join("\n")], { type: "text/plain" });
+
+                    file = new File([blob], prompt("Please enter a name for your new note") + ".md", {type: "text/plain"});
                     let path = "/NoteCat";
 
                     let fd = new FormData();
