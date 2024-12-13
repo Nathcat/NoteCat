@@ -29,6 +29,7 @@
     <script>
         const searchParams = new URLSearchParams(window.location.search);
         var file;
+        var content = [];
 
         if (searchParams.has("file")) {
             fetch("https://cloud.nathcat.net/get-file.php", {
@@ -41,6 +42,13 @@
                 if (r.status === "success") {
                     file = r.file;
                     file.filePath = searchParams.get("file")
+
+                    fetch("https://cdn.nathcat.net/cloud/" + searchParams.get("file"))
+                        .then((r) => r.text()).then((r) => {
+                            content = r.split("\n");
+                        }
+                    );
+
                 } else {
                     alert(r.message);
                 }
@@ -53,7 +61,6 @@
         }
 
         var converter = new showdown.Converter();
-        var content = [];
         var renderContent = () => {
             let container = document.getElementById("note-content");
             container.innerHTML = "";
@@ -65,6 +72,8 @@
                 $(this).attr("target", "_blank");
             });
         };
+
+        renderContent();
 
         $("#note-editor").on("input", function(e) {
             this.style.height = 'auto';
