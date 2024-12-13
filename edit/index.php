@@ -106,7 +106,9 @@
                         else location = "?file=" + r.name;
                     });
                 } else {
-                    file = new File(content.join("\n"), file.name);
+                    let blob = new Blob([content.join("\n")], { type: "text/plain" });
+
+                    file = new File([blob], file.name, {type: "text/plain"});
                     let path = "/NoteCat";
 
                     let fd = new FormData();
