@@ -23,7 +23,6 @@
             <p id="last-saved-message"><i>Not saved since opened.</i></p>
             <div class="horizontal-divider"></div>
             <div id="note-content" class="column"></div>
-            <textarea id="note-editor"></textarea>
         </div>
 
         <?php include("../footer.php"); ?>
@@ -34,16 +33,77 @@
         var file;
         var content = [];
         var converter = new showdown.Converter();
+        var editPosition = 0;
+
+        var editor_input = function(e) {
+            this.style.height = 'auto';
+            this.style.height = `${this.scrollHeight}px`;
+        };
+
+        var editor_keydown = function(e) {
+            if (e.key === "Enter") {
+                let lines = $(this).val().split("\n");
+                if ((lines[lines.length - 1] === "" || e.ctrlKey) && lines.length !== 1) {
+                    if (editPosition === content.length) {
+                        content.push($(this).val());
+                    } else {
+                        content[editPosition] = $(this).val();
+                    }
+
+                    editPosition++;
+
+                    renderContent();
+                    saveNote();
+                }
+            } else if (e.key === "Backspace") {
+                if ($(this).val() === "" || e.ctrlKey) {
+                    content[editPosition] = $(this).val();
+
+                    if (editPosition !== 0) {
+                        editPosition--;
+                    }
+
+                    renderContent();
+                    saveNote();
+                }
+            } else if (e.ctrlKey && e.key === "s") {
+                e.preventDefault();
+
+                saveNote();
+            }
+        };
+
         var renderContent = () => {
             let container = document.getElementById("note-content");
             container.innerHTML = "";
-            content.forEach((v) => {
-                container.innerHTML += converter.makeHtml(v);
+            content.forEach((v, i) => {
+                if (i === editPosition) {
+                    container.innerHTML += "<textarea id='note-editor'>" + v + "</textarea>";
+                } else {
+                    container.innerHTML += converter.makeHtml(v);
+                }
             });
+
+            if (editPosition === content.length) {
+                container.innerHTML += "<textarea id='note-editor'></textarea>";
+            }
 
             $("#note-content a").each(function() {
                 $(this).attr("target", "_blank");
             });
+
+            $("#note-content").children().each(function() {
+                $(this).on("click", function (e) {
+                    if (editPosition === $(this).index()) return;
+                    
+                    content[editPosition] = $("#note-editor").val();
+                    editPosition = $(this).index();
+                    renderContent();
+                });
+            });
+
+            $("#note-editor").on("input", editor_input);
+            $("#note-editor").on("keydown", editor_keydown);
         };
 
         var saveNote = () => {
@@ -94,11 +154,6 @@
             }
         };
 
-        var autoSaveHandler = () => {
-            saveNote();
-            setTimeout(autoSaveHandler, 10000);
-        }
-
         if (searchParams.has("file")) {
             fetch("https://cloud.nathcat.net/get-file.php", {
                 method: "POST",
@@ -127,36 +182,8 @@
             document.title = "New file";
 
             file = undefined;
+            renderContent();
         }
-
-        $("#note-editor").on("input", function(e) {
-            this.style.height = 'auto';
-            this.style.height = `${this.scrollHeight}px`;
-        });
-
-        $("#note-editor").on("keydown", function(e) {
-            if (e.key === "Enter") {
-                let lines = $(this).val().split("\n");
-                if (lines[lines.length - 1] === "") {
-                    content.push($(this).val());
-                    renderContent();
-                    $(this).val("");
-                    saveNote();
-                }
-            } else if (e.key === "Backspace") {
-                let lines = $(this).val().split("\n");
-                if (lines[lines.length - 1] === "") {
-                    $(this).val(content[content.length - 1]);
-                    content.splice(content.length - 1, 1);
-                    renderContent();
-                    saveNote();
-                }
-            } else if (e.ctrlKey && e.key === "s") {
-                e.preventDefault();
-
-                saveNote();
-            }
-        });
     </script>
 </body>
 
