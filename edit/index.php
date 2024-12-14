@@ -172,6 +172,19 @@
                     fetch("https://cdn.nathcat.net/cloud/read-notecat.php?file=" + searchParams.get("file"))
                         .then((r) => r.text()).then((r) => {
                             content = r.split("\n\n");
+
+                            let empty_pass = false;
+                            while (!empty_pass) {
+                                empty_pass = true;
+                                for (let i = 0; i < content.length; i++) {
+                                    if (content[i].match(/^(\\s+|\\n+)$/).length !== 0) {
+                                        empty_pass = false;
+                                        content.splice(i, 1);
+                                        break;
+                                    }
+                                }
+                            }
+                            
                             editPosition = content.length;
                             renderContent();
                         });
