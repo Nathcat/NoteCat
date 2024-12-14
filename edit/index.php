@@ -95,7 +95,7 @@
             $("#note-content").children().each(function() {
                 $(this).on("click", function (e) {
                     if (editPosition === $(this).index()) return;
-                    
+
                     content[editPosition] = $("#note-editor").val();
                     editPosition = $(this).index();
                     renderContent();
@@ -104,6 +104,8 @@
 
             $("#note-editor").on("input", editor_input);
             $("#note-editor").on("keydown", editor_keydown);
+
+            document.getElementById("note-editor").focus();
         };
 
         var saveNote = () => {
