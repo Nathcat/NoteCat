@@ -177,7 +177,7 @@
                             while (!empty_pass) {
                                 empty_pass = true;
                                 for (let i = 0; i < content.length; i++) {
-                                    if (content[i].match(/^(\\s+|\\n+)$/) !== null) {
+                                    if (content[i].match(/^(\s+|\n+)$|^$/) !== null) {
                                         empty_pass = false;
                                         content.splice(i, 1);
                                         break;
