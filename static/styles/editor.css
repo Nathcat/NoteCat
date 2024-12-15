@@ -3,7 +3,7 @@
     box-sizing: border-box;
     padding: 0px;
     margin: 0px;
-    font-size: 2vw;
+    font-size: 1.5em;
     background-color: var(--primary-color);
     resize: none;
     overflow: hidden;
