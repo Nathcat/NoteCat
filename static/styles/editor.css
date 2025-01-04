@@ -14,6 +14,10 @@
     outline: none;
 }
 
+#note-content img {
+    max-width: 95%;
+}
+
 @media (max-width: 1000px) {
     #note-content #note-editor, #note-content p, #note-content li, #note-content a, #note-content th, #note-content td {
         font-size: 1.75em;
