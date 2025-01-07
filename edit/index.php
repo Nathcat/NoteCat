@@ -120,13 +120,13 @@
                     content[editPosition] = $("#note-editor").val();
                     editPosition = $(this).index();
                     renderContent();
+
+                    editor_autosize();
                 });
             });
 
             $("#note-editor").on("input", editor_autosize);
             $("#note-editor").on("keydown", editor_keydown);
-
-            editor_autosize();
 
             document.getElementById("note-editor").focus();
         };
