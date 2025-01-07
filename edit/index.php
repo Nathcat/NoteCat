@@ -12,6 +12,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cloud.nathcat.net/static/scripts/cloud.js"></script>
     <script src="  https://cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 
 <body>
@@ -34,6 +36,11 @@
         var content = [];
         var converter = new showdown.Converter();
         var editPosition = 0;
+
+        var editor_autosize = function() {
+            document.getElementById("note-editor").style.height = 'auto';
+            document.getElementById("note-editor").style.height = `${document.getElementById("note-editor").scrollHeight}px`;
+        };
 
         var editor_input = function(e) {
             this.style.height = 'auto';
@@ -80,9 +87,28 @@
                 if (i === editPosition) {
                     container.innerHTML += "<textarea id='note-editor'>" + v + "</textarea>";
                 } else {
-                    container.innerHTML += converter.makeHtml(v);
+                    //container.innerHTML += converter.makeHtml(v);
+                    let latex_split = v.split("$$");
+                    if (latex_split.length === 1 || ((latex_split.length % 2) === 0)) {
+                        container.innerHTML += converter.makeHtml(v);
+                    }
+                    else {
+                        let html = "<div class='note-content-block'>";
+                        for (let i = 0; i < latex_split.length; i++) {
+                            if ((i % 2) === 0) html += converter.makeHtml(latex_split[i]);
+                            else {
+                                html += "<p>$$" + latex_split[i] + "$$</p>";
+                            }
+                        }
+
+                        container.innerHTML += html + "</div>";
+                    }
                 }
             });
+
+            if (MathJax !== undefined) {
+                MathJax.typeset();
+            }
 
             if (editPosition === content.length) {
                 container.innerHTML += "<textarea id='note-editor'></textarea>";
@@ -93,12 +119,14 @@
             });
 
             $("#note-content").children().each(function() {
-                $(this).on("click", function (e) {
+                $(this).on("click", function(e) {
                     if (editPosition === $(this).index()) return;
 
                     content[editPosition] = $("#note-editor").val();
                     editPosition = $(this).index();
                     renderContent();
+
+                    editor_autosize();
                 });
             });
 
@@ -172,6 +200,19 @@
                     fetch("https://cdn.nathcat.net/cloud/read-notecat.php?file=" + searchParams.get("file"))
                         .then((r) => r.text()).then((r) => {
                             content = r.split("\n\n");
+
+                            let empty_pass = false;
+                            while (!empty_pass) {
+                                empty_pass = true;
+                                for (let i = 0; i < content.length; i++) {
+                                    if (content[i].match(/^(\s+|\n+)$|^$/) !== null) {
+                                        empty_pass = false;
+                                        content.splice(i, 1);
+                                        break;
+                                    }
+                                }
+                            }
+
                             editPosition = content.length;
                             renderContent();
                         });
