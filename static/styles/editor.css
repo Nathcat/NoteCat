@@ -19,7 +19,13 @@
 }
 
 @media (max-width: 1000px) {
-    #note-content #note-editor, #note-content p, #note-content li, #note-content a, #note-content th, #note-content td {
+
+    #note-content #note-editor,
+    #note-content p,
+    #note-content li,
+    #note-content a,
+    #note-content th,
+    #note-content td {
         font-size: 1.75em;
     }
 
@@ -35,7 +41,18 @@
         font-size: 2em;
     }
 
-    #note-content h4, h5, h6 {
+    #note-content h4,
+    h5,
+    h6 {
         font-size: 1.8em;
     }
+}
+
+mjx-container {
+    overflow-x: scroll;
+    max-width: 90vw;
+    overflow-y: hidden;
+    border: 2px solid var(--quad-color);
+    border-radius: 25px;
+    padding: 25px;
 }
