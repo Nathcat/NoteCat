@@ -37,7 +37,7 @@
         var converter = new showdown.Converter();
         var editPosition = 0;
 
-        var editor_input = function(e) {
+        var editor_autosize = function(e) {
             this.style.height = 'auto';
             this.style.height = `${this.scrollHeight}px`;
         };
@@ -123,8 +123,10 @@
                 });
             });
 
-            $("#note-editor").on("input", editor_input);
+            $("#note-editor").on("input", editor_autosize);
             $("#note-editor").on("keydown", editor_keydown);
+
+            editor_autosize();
 
             document.getElementById("note-editor").focus();
         };
