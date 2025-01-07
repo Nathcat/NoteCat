@@ -37,7 +37,12 @@
         var converter = new showdown.Converter();
         var editPosition = 0;
 
-        var editor_autosize = function(e) {
+        var editor_autosize = function() {
+            document.getElementById("note-editor").style.height = 'auto';
+            document.getElementById("note-editor").style.height = `${document.getElementById("note-editor").scrollHeight}px`;
+        };
+
+        var editor_input = function(e) {
             this.style.height = 'auto';
             this.style.height = `${this.scrollHeight}px`;
         };
@@ -125,7 +130,7 @@
                 });
             });
 
-            $("#note-editor").on("input", editor_autosize);
+            $("#note-editor").on("input", editor_input);
             $("#note-editor").on("keydown", editor_keydown);
 
             document.getElementById("note-editor").focus();
