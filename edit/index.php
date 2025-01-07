@@ -12,6 +12,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cloud.nathcat.net/static/scripts/cloud.js"></script>
     <script src="  https://cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 
 <body>
@@ -84,6 +86,10 @@
                 }
             });
 
+            if (MathJax !== undefined) {
+                MathJax.typeset();
+            }
+
             if (editPosition === content.length) {
                 container.innerHTML += "<textarea id='note-editor'></textarea>";
             }
@@ -93,7 +99,7 @@
             });
 
             $("#note-content").children().each(function() {
-                $(this).on("click", function (e) {
+                $(this).on("click", function(e) {
                     if (editPosition === $(this).index()) return;
 
                     content[editPosition] = $("#note-editor").val();
