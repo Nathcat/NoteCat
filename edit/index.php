@@ -88,7 +88,7 @@
                         container.innerHTML += converter.makeHtml(v);
                     }
                     else {
-                        let html = "";
+                        let html = "<div class='note-content-block'>";
                         for (let i = 0; i < latex_split.length; i++) {
                             if ((i % 2) === 0) html += converter.makeHtml(latex_split[i]);
                             else {
@@ -96,7 +96,7 @@
                             }
                         }
 
-                        container.innerHTML += html;
+                        container.innerHTML += html + "</div>";
                     }
                 }
             });
