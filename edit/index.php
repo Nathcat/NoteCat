@@ -82,7 +82,22 @@
                 if (i === editPosition) {
                     container.innerHTML += "<textarea id='note-editor'>" + v + "</textarea>";
                 } else {
-                    container.innerHTML += converter.makeHtml(v);
+                    //container.innerHTML += converter.makeHtml(v);
+                    let latex_split = v.split("$$");
+                    if (latex_split.length === 1 || ((latex_split.length % 2) === 0)) {
+                        container.innerHTML += converter.makeHtml(v);
+                    }
+                    else {
+                        let html = "";
+                        for (let i = 0; i < latex_split.length; i++) {
+                            if ((i % 2) === 0) html += converter.makeHtml(latex_split[i]);
+                            else {
+                                html += "<p>$$" + latex_split[i] + "$$</p>";
+                            }
+                        }
+
+                        container.innerHTML += html;
+                    }
                 }
             });
 
