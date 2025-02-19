@@ -34,7 +34,11 @@
         const searchParams = new URLSearchParams(window.location.search);
         var file;
         var content = [];
-        var converter = new showdown.Converter();
+        var converter = new showdown.Converter({
+            tasklists: "true",
+            strikethrough: "true",
+            underline: "true"
+        });
         var editPosition = 0;
 
         var editor_autosize = function() {
