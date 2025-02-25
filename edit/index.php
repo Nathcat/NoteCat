@@ -36,8 +36,7 @@
         var content = [];
         var converter = new showdown.Converter({
             tasklists: "true",
-            strikethrough: "true",
-            underline: "true"
+            strikethrough: "true"
         });
         var editPosition = 0;
 
