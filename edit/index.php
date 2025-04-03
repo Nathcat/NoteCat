@@ -20,7 +20,7 @@
     <div onclick="document.getElementById('note-editor').focus()" class="content">
         <?php include("../header.php"); ?>
 
-        <div style="margin-left: 10px" class="main">
+        <div style="margin-left: 10px; width: calc(100% - 10px);" class="main">
             <a href="/">Return home</a>
             <p id="last-saved-message"><i>Not saved since opened.</i></p>
             <div class="horizontal-divider"></div>
