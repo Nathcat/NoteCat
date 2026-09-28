@@ -1,8 +1,6 @@
-import type { PageServerLoad as RootServerLoad } from "../../routes/$types";
-import type { PageServerLoad as LoginResponseServerLoad } from "../../routes/login/response/$types";
-import type { PageServerLoad as LogoutServerLoad } from "../../routes/logout/$types";
 import Database from "better-sqlite3";
 import { redirect } from "@sveltejs/kit";
+import type { Cookies } from "@sveltejs/kit";
 import { PUBLIC_CLIENT_ID } from "$env/static/public";
 import { CLIENT_SECRET } from "$env/static/private";
 import { v4 as uuid } from "uuid";
@@ -29,9 +27,9 @@ export type FailStatus = {
 /**
  * @brief Implementation of PageServerLoad which redirects with 302 login_page_path, when authentication fails. Authentication is performed via a session cookie token named "session". If successful, user data is returned.
  */
-export const authenticate_or_redirect: RootServerLoad = async ({
-  cookies,
-}): Promise<User> => {
+export const authenticate_or_redirect = async (
+  cookies: Cookies,
+): Promise<User> => {
   const db = new Database(db_file, {});
   let row = db
     .prepare("SELECT * FROM AccessTokens WHERE `session` = ?")
@@ -65,10 +63,10 @@ export const authenticate_or_redirect: RootServerLoad = async ({
 /**
  * @brief Should be placed at the endpoint the OAuth server redirects to. This will handle the incoming error or auth grant code.
  */
-export const oauth_response_handler: LoginResponseServerLoad = async ({
-  url,
-  cookies,
-}): Promise<FailStatus> => {
+export const oauth_response_handler = async (
+  url: URL,
+  cookies: Cookies,
+): Promise<FailStatus> => {
   const grant = url.searchParams.get("code");
   const error = url.searchParams.get("error");
 
@@ -119,7 +117,7 @@ export const oauth_response_handler: LoginResponseServerLoad = async ({
 /**
  * @brief Logout a user.
  */
-export const logout: LogoutServerLoad = async ({ cookies }): Promise<never> => {
+export const logout = async (cookies: Cookies): Promise<never> => {
   let session = cookies.get(session_cookie_name);
   if (session) {
     const db = new Database(db_file, {});
