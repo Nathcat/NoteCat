@@ -15,8 +15,13 @@
 </div>
 
 <style>
+  body {
+    padding: 0;
+  }
+
   .editor-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    height: 100%;
   }
 </style>
