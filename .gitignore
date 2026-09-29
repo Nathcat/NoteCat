@@ -1,10 +1,27 @@
-# Ignore Gradle project-specific cache directory
-.gradle
+node_modules
 
-# Ignore Gradle build output directory
-build
+# Output
+.output
+.vercel
+.netlify
+.wrangler
+/.svelte-kit
+/build
 
-.project
-.classpath
-.settings
-bin
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+.env.*
+!.env.example
+!.env.test
+
+# Vite
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+auth.db
+
+content
