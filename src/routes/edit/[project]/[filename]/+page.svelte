@@ -1,10 +1,12 @@
 <script lang="ts">
   import type { PageProps } from "./$types";
-
   import CodeMirror from "svelte-codemirror-editor";
   import { oneDark } from "@codemirror/theme-one-dark";
   import { latex } from "codemirror-lang-latex";
   import { keymap, type EditorView } from "@codemirror/view";
+  import { Circle } from "svelte-loading-spinners";
+  import { goto } from "$app/navigation";
+  import SideButton from "./SideButton.svelte";
 
   let { data }: PageProps = $props();
   const user = data.user;
@@ -19,7 +21,28 @@
     });
   };
 
-  let previewUrl = $state(data.filename + "/preview");
+  const compile = () => {
+    write_state();
+
+    if (previewUrl !== "") {
+      URL.revokeObjectURL(previewUrl);
+    }
+
+    previewInit = false;
+    loadingPreview = true;
+    fetch(data.filename + "/compile")
+      .then((r) => {
+        return r.blob();
+      })
+      .then((r) => {
+        previewUrl = URL.createObjectURL(r);
+        loadingPreview = false;
+      });
+  };
+
+  let previewUrl = $state("");
+  let loadingPreview = $state(false);
+  let previewInit = $state(true);
 </script>
 
 <div class="editor-container">
@@ -33,32 +56,51 @@
       {
         key: "Mod-s",
         run: (_): boolean => {
-          write_state();
-          fetch(data.filename + "/compile")
-            .then((r) => {
-              return r.blob();
-            })
-            .then((r) => {
-              previewUrl = URL.createObjectURL(r);
-            });
+          compile();
           return true;
         },
       },
     ]}
   ></CodeMirror>
+  {#if previewInit}
+    <div id="preview-loading">
+      <h3>Hit Ctrl-S while focussed on the editor to compile a preview!</h3>
+    </div>
+  {:else if !loadingPreview}
+    <iframe id="preview" src={previewUrl} title="Preview"></iframe>
+  {:else}
+    <div id="preview-loading">
+      <Circle color="white" size="60" unit="px" />
+    </div>
+  {/if}
 
-  <iframe id="preview" src={previewUrl} title="Preview"></iframe>
+  <div class="column">
+    <SideButton onclick={() => goto("/")} text="Home"></SideButton>
+    <SideButton onclick={compile} text="Compile preview"></SideButton>
+  </div>
 </div>
 
 <style>
   .editor-container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 0.1fr;
     height: 100%;
   }
 
   #preview {
     width: 100%;
     height: 100%;
+  }
+
+  #preview-loading {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+  }
+
+  #preview-loading h3 {
+    text-align: center;
+    margin: 10%;
   }
 </style>

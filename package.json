@@ -30,6 +30,7 @@
 		"codemirror-lang-latex": "^0.6.1",
 		"fs": "0.0.1-security",
 		"svelte-codemirror-editor": "^2.1.0",
+		"svelte-loading-spinners": "^0.3.6",
 		"uuid": "^14.0.2"
 	}
 }

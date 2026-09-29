@@ -1,4 +1,4 @@
-import { listFilesInDirectory } from "$lib/files";
+import { getContentDir, listFilesInDirectory } from "$lib/files";
 import { authenticate_or_redirect, type User } from "$lib/nathcat.net/oauth";
 import type { IEntity } from "@svar-ui/svelte-filemanager";
 import type { PageServerLoad } from "./$types";
@@ -51,7 +51,8 @@ function expand_directory(dir: Directory, arr: IEntity[]): void {
 export const load: PageServerLoad = async ({ cookies }) => {
   let user: User = await authenticate_or_redirect(cookies);
 
-  let basePath = "content/" + user.id;
+  let basePath = getContentDir(user);
+  fs.mkdirSync(basePath, { recursive: true });
 
   let files: IEntity[] = [];
   let dir = await map_directory(basePath);
