@@ -29,20 +29,20 @@ export const GET: RequestHandler = async ({ cookies, params }) => {
   try {
     // Run twice for a full compilation cycle
     execSync(
-      "mkdir -p " +
+      'mkdir -p "' +
         getCompileDir(user, params.project!!) +
-        " && cd " +
+        '" && cd "' +
         getProjectDir(user, params.project!!) +
-        " && pdflatex -interaction=nonstopmode --output-directory=" +
+        '" && pdflatex -interaction=nonstopmode --output-directory="' +
         getCompileDirNoProject() +
-        " root.tex && pdflatex -interaction=nonstopmode --output-directory=" +
+        '" root.tex && pdflatex -interaction=nonstopmode --output-directory="' +
         getCompileDirNoProject() +
-        " root.tex",
+        '" root.tex',
     );
 
     output = fs.readFileSync(getCompiledPdf(user, params.project!!));
 
-    execSync("rm -r " + getCompileDir(user, params.project!!));
+    execSync('rm -r "' + getCompileDir(user, params.project!!) + '"');
   } catch (e: any) {
     console.error(e.stdout.toString());
     return new Response(e.stdout.toString(), { status: 500 });
