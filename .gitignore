@@ -23,5 +23,5 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
 auth.db
-
 content
+build
