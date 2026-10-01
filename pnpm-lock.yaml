@@ -14,6 +14,9 @@ importers:
       '@codemirror/view':
         specifier: ^6.43.13
         version: 6.43.13
+      '@kitty-committee/authcat-oauth-svelte':
+        specifier: ^0.0.3
+        version: 0.0.3(svelte@5.57.1)
       '@svar-ui/svelte-filemanager':
         specifier: ^2.6.0
         version: 2.6.0
@@ -23,9 +26,6 @@ importers:
       '@types/better-sqlite3':
         specifier: ^9.6.0
         version: 9.6.0
-      authcat-oauth-svelte:
-        specifier: ^0.0.3
-        version: 0.0.3(svelte@5.57.1)
       better-sqlite3:
         specifier: ^13.0.3
         version: 13.0.3
@@ -111,6 +111,11 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
+
+  '@kitty-committee/authcat-oauth-svelte@0.0.3':
+    resolution: {integrity: sha512-8NQ7Pi6mkPa1lBYqZFapHptNalb/6ex3JcZWcSQ0BIu5SdsFRjE43CFt81OM8jHyzdeANP24ECiGPS2QdRFf0Q==}
+    peerDependencies:
+      svelte: ^5.0.0
 
   '@lezer/common@1.5.3':
     resolution: {integrity: sha512-H0iErY4e43LpXbYDyBci5W4v/RwTgGV3YzYOlJPiGZ8RY8w51kVE+xLn1tg3Z6UmSfyETvtsUK3r7YsgDQEI7Q==}
@@ -554,11 +559,6 @@ packages:
   aria-query@5.3.1:
     resolution: {integrity: sha512-Z/ZeOgVl7bcSYZ/u/rh0fOpvEpq//LZmdbkXyc7syVzjPAhfOa9ebsdTSjEBDU4vs5nC98Kfduj1uFo0qyET3g==}
     engines: {node: '>= 0.4'}
-
-  authcat-oauth-svelte@0.0.3:
-    resolution: {integrity: sha512-e4w8PYWjRVj1iy9avm96fRsSBkZhxGFxguwFy3EkhbvswAyjwt0AxUzim2E2OoRjjdVWXUcPP0l+hKi9Fcdvrg==}
-    peerDependencies:
-      svelte: ^5.0.0
 
   axobject-query@4.1.0:
     resolution: {integrity: sha512-qIj0G9wZbMGNLjLmg1PT6v2mE9AH2zlnADJD/2tC6E00hgmhUOfEB6greHPAfLRSufHqROIUTkw6E+M3lH0PTQ==}
@@ -1008,6 +1008,13 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.6.0
 
+  '@kitty-committee/authcat-oauth-svelte@0.0.3(svelte@5.57.1)':
+    dependencies:
+      '@types/better-sqlite3': 9.6.0
+      better-sqlite3: 13.0.3
+      svelte: 5.57.1
+      uuid: 14.0.2
+
   '@lezer/common@1.5.3': {}
 
   '@lezer/generator@1.8.1':
@@ -1356,13 +1363,6 @@ snapshots:
   acorn@8.18.0: {}
 
   aria-query@5.3.1: {}
-
-  authcat-oauth-svelte@0.0.3(svelte@5.57.1):
-    dependencies:
-      '@types/better-sqlite3': 9.6.0
-      better-sqlite3: 13.0.3
-      svelte: 5.57.1
-      uuid: 14.0.2
 
   axobject-query@4.1.0: {}
 

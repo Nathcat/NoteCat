@@ -1,5 +1,5 @@
 import { getProjectFile, getProjectFileNoContent } from "$lib/files";
-import { authenticate_or_redirect } from "authcat-oauth-svelte";
+import { authenticate_or_redirect } from "@kitty-committee/authcat-oauth-svelte";
 import type { PageServerLoad } from "./$types";
 import fs from "fs";
 

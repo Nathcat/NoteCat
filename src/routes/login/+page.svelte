@@ -1,5 +1,5 @@
 <script lang="ts">
-  import OauthButton from "authcat-oauth-svelte/OauthButton.svelte";
+  import OauthButton from "@kitty-committee/authcat-oauth-svelte/OauthButton.svelte";
 </script>
 
 <div class="content">
