@@ -1,5 +1,5 @@
 import fs from "fs";
-import type { User } from "./nathcat.net/oauth";
+import type { User } from "authcat-oauth-svelte";
 
 export const listFilesInDirectory = async (path: string) =>
   new Promise((resolve, reject) =>

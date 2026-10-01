@@ -1,8 +1,8 @@
 import { getContentDir, listFilesInDirectory } from "$lib/files";
-import { authenticate_or_redirect, type User } from "$lib/nathcat.net/oauth";
 import type { IEntity } from "@svar-ui/svelte-filemanager";
 import type { PageServerLoad } from "./$types";
 import fs from "fs";
+import { type User, authenticate_or_redirect } from "authcat-oauth-svelte";
 
 type Directory = {
   name: string;

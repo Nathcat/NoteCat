@@ -1,4 +1,4 @@
-import { logout } from "$lib/nathcat.net/oauth";
+import { logout } from "authcat-oauth-svelte";
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ cookies }) => {

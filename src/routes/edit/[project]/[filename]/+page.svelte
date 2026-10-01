@@ -9,8 +9,8 @@
   import SideButton from "./SideButton.svelte";
 
   let { data }: PageProps = $props();
-  const user = data.user;
-  let value = data.file;
+  const user = $derived(data.user);
+  let value = $derived(data.file);
   let editor = $state<EditorView>();
 
   const write_state = () => {

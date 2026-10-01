@@ -6,7 +6,7 @@ import {
   getProjectFile,
   getProjectRootFile,
 } from "$lib/files";
-import { authenticate_or_redirect } from "$lib/nathcat.net/oauth";
+import { authenticate_or_redirect } from "authcat-oauth-svelte";
 import type { RequestHandler } from "@sveltejs/kit";
 import { execSync } from "child_process";
 import fs from "fs";

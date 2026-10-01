@@ -4,6 +4,9 @@
   import {
     Filemanager,
     type IEntity,
+    type IFileMenuOption,
+    type IParsedEntity,
+    type TContextMenuType,
     getMenuOptions,
   } from "@svar-ui/svelte-filemanager";
   import { WillowDark } from "@svar-ui/svelte-filemanager";
@@ -15,8 +18,10 @@
   const openFile = (id: string) => {
     goto("/edit" + id);
   };
-
-  function menuOptions(mode: any, item: any) {
+  function menuOptions(
+    mode: TContextMenuType,
+    item: IParsedEntity | undefined,
+  ): false | IFileMenuOption[] {
     switch (mode) {
       case "add":
         return [
@@ -32,7 +37,7 @@
             text: "Open",
             hotkey: "Enter",
             id: "open-file",
-            handler: ({ context }: { context: IEntity }) => {
+            handler: ({ context }) => {
               openFile(context.id);
             },
           },

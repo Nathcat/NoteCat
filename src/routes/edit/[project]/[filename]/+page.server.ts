@@ -1,5 +1,5 @@
 import { getProjectFile, getProjectFileNoContent } from "$lib/files";
-import { authenticate_or_redirect } from "$lib/nathcat.net/oauth";
+import { authenticate_or_redirect } from "authcat-oauth-svelte";
 import type { PageServerLoad } from "./$types";
 import fs from "fs";
 
