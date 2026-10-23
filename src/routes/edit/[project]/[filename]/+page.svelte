@@ -18,6 +18,10 @@
     fetch(data.filename + "/write", {
       method: "PUT",
       body: text,
+    }).then((r) => {
+      if (r.status !== 200) {
+        alert("Failed to save document! Server returned " + r.status);
+      }
     });
   };
 
