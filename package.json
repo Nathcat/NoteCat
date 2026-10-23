@@ -23,10 +23,11 @@
   "dependencies": {
     "@codemirror/theme-one-dark": "^6.1.3",
     "@codemirror/view": "^6.43.13",
+    "@kitty-committee/authcat-oauth-svelte": "^0.0.3",
     "@svar-ui/svelte-filemanager": "^2.6.0",
     "@sveltejs/adapter-node": "^5.5.7",
     "@types/better-sqlite3": "^9.6.0",
-    "@kitty-committee/authcat-oauth-svelte": "^0.0.3",
+    "@xterm/xterm": "^6.0.0",
     "better-sqlite3": "^13.0.3",
     "child_process": "^1.0.2",
     "codemirror-lang-latex": "^0.6.1",
